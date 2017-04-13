@@ -1,8 +1,23 @@
+body {
+  background-size: cover;
+  background-image: url("https://image.shutterstock.com/z/stock-photo-us-navy-digital-camouflage-fabric-texture-background-139290818.jpg");
+
+}
+
 table {
+  margin: auto;
   border: 2px black solid;
   border-collapse: collapse;
   width: 600px;
   height: 600px;
+  background-image: url("https://s-media-cache-ak0.pinimg.com/564x/86/24/c0/8624c075ee228f7f01df6aa01ce07ef3.jpg");
+}
+
+#tableDiv {
+  position: relative;
+  background-size: cover;
+
+
 }
 td {
   border: 2px black solid;
@@ -10,14 +25,33 @@ td {
 
 }
 .hits {
-  background-color: yellow;
-}
-
-.missed {
-  background-color: purple;
-}
-.loseShips {
   background-color: red;
   background-size: contain;
   background-image: url("/Users/learn/Desktop/Battleship/junkboat.png");
+}
+
+.missed {
+  background-color: blue;
+}
+.loseShips {
+  background-color: yellow;
+  background-size: contain;
+  background-image: url("/Users/learn/Desktop/Battleship/junkboat.png");
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  font-size: 35px;
+}
+
+h2 {
+  text-align: center;
+  color: white;
+  font-size: 35px;
+}
+
+.jumbotron {
+  padding: 5px;
+  background-color: rgba(187, 26, 26, 0.7);
 }
