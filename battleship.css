@@ -3,15 +3,21 @@ body {
   background-image: url("/Users/learn/Desktop/Battleship/spacebattle.jpeg");
 
 }
-
+#container {
+  margin: 20px;
+}
 table {
-  margin: auto;
+  margin: 50px;
   border: 2px white solid;
   border-collapse: collapse;
   width: 600px;
   height: 600px;
   background-color: rgba(255, 255, 255, 0.5);
   /*background-image: url("https://s-media-cache-ak0.pinimg.com/564x/86/24/c0/8624c075ee228f7f01df6aa01ce07ef3.jpg");*/
+}
+
+#restart{
+  margin: auto;
 }
 
 #tableDiv {
@@ -44,16 +50,27 @@ td {
 }
 #status {
   background-color: rgba(187, 26, 26, 0.7);
+  border: 2px black solid;
 }
 
 h2 {
   text-align: center;
   color: white;
   font-size: 35px;
+  font-family: 'Ruda', sans-serif;
+}
+
+.loser {
+  font-size: 45px;
+  color: blue;
+  font-family: 'Rubik Mono One', sans-serif;
+}
+
+h1 {
+  padding-left: 50px;
 }
 
 .jumbotron {
-  padding-left: 10px;
   background-color: rgba(187, 26, 26, 0.7);
   text-align: left;
   color: white;

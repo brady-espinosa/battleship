@@ -18,13 +18,14 @@ for (var row=0; row<=9; row++) {
 
 
 // Our global variables
-var torpedoCount = 35
+var torpedoCount = 50
 var torpedoUsed = 0
 var hitCount= 0
 var row
 var col
 var shipLocs = []
-
+var winner = false
+var loser = false
 
 // an object to store our gameState and game board
 var gameState = {
@@ -133,7 +134,10 @@ function shootTorpedo(e){
   console.log(aRow)
   console.log(aCol)
   // protects user from using torpedo's on space that has already been torpedoed
-  if (gameState.board[aRow][aCol] != "" && gameState.board[aRow][aCol] != 1 && gameState.board[aRow][aCol] != 2 && gameState.board[aRow][aCol] != 3 && gameState.board[aRow][aCol] != 4 && gameState.board[aRow][aCol] != 5) {
+  if (loser === true || winner === true){
+    alert("game over! play again")
+  }
+  else if (gameState.board[aRow][aCol] != "" && gameState.board[aRow][aCol] != 1 && gameState.board[aRow][aCol] != 2 && gameState.board[aRow][aCol] != 3 && gameState.board[aRow][aCol] != 4 && gameState.board[aRow][aCol] != 5) {
     alert("target has already been torpedo'd")
   }
   // changes the color of a space without a ship to purple and updates the gameState.board with a miss on that index, also updates torpedo counts for used and remaining and changes the innerHTML
@@ -155,7 +159,7 @@ function shootTorpedo(e){
     document.getElementById("tries").innerHTML = " Torpedoes Left: " + torpedoCount
     document.getElementById("shot").innerHTML = " Torpedoes Used: " + torpedoUsed
     hitCount++
-    document.getElementById('hitter').innerHTML = "Hit Count: " + hitCount
+    document.getElementById("hitter").innerHTML = "Hit Count: " + hitCount
     checkWin()
   }
 }
@@ -168,15 +172,18 @@ function shootTorpedo(e){
 // function checkWin() alerts a win message when the hit counter reaches 5
 function checkWin() {
   if (hitCount === 17) {
-    alert("You Sunk All The Ships, Congrats!")
-
+    document.getElementById("tries").innerHTML = "YOU WIN"
+    winner = true
+    document.getElementById("tries").className = "loser"
   }
 }
 // function checkLose() alerts a losing message when the user runs out of torpedoes(torpedoCount === 0)
 function checkLose() {
   if (torpedoCount === 0) {
-    alert("You Lose")
+    document.getElementById("tries").innerHTML = "YOU LOSE"
+    loser = true
     showShips()
+    document.getElementById("tries").className = "loser"
   }
 }
 // function for creating a random row and column for a new ship location
