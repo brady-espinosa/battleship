@@ -18,7 +18,7 @@ for (var row=0; row<=9; row++) {
 
 
 // Our global variables
-var torpedoCount = 25
+var torpedoCount = 35
 var torpedoUsed = 0
 var hitCount= 0
 var row
@@ -28,7 +28,7 @@ var shipLocs = []
 
 // an object to store our gameState and game board
 var gameState = {
-  SHIP: 1,
+  SHIP: [5,4,3,3,2],
   board: [
     ["", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", ""],
@@ -42,22 +42,83 @@ var gameState = {
     ["", "", "", "", "", "", "", "", "", ""]
   ]
 }
+// initiallizing the game board
+placeShips()
 
-// loop to set the random locations of the ships and store the location as (col,row) within the array shipsLoc[]
-// while loop used to make sure no ship location can be the same
-createBoard()
-function createBoard() {
-  for (var i = 0; i<= 4; i++) {
-    newShipLoc()
-    while (fit()){
-      newShipLoc()
+var orient = 0
+function randOrient() {
+  orient = Math.floor(Math.random()*2)
+}
+
+function placeShips() {
+  randOrient()
+  gameState.SHIP.forEach(function(length){
+    do {
+        newShipLoc()
+    } while(shipHorBad(row,col,length) || shipVertBad(row,col,length))
+
+// Based on the length of SHIP a loop is ran to update the gameState.board
+
+    for (var j = 0; j<length; j++){
+
+      if (orient === 1){
+        gameState.board[row][col+j] = length
+        shipLocs.push([row,col+j])
+      if(j === length -1){
+        orient = 0
       }
-    gameState.board[row][col] = gameState.SHIP
-    shipLocs.push([row,col])
+      }
+      else{
+        gameState.board[row+j][col] = length
+        shipLocs.push([row+j,col])
+        if(j === length -1){
+        orient = 1
+      }
+    }
   }
+})
 }
 
 
+// setting board contstraint, if col is > 9, col is off the board.
+
+function shipHorBad(row,col,length){
+  var badCoord = false
+  if (col + length > 9){
+    badCoord = true
+  }
+  // if the gameState.board equals any other than an empty "" the coordinates are true.
+
+  else{
+
+  for (var i = 0; i<length; i++){
+    if (gameState.board[row][col+i] != ""){
+      badCoord = true
+    }
+  }
+  }
+  return badCoord
+}
+
+// setting board contstraint, if row is > 9, col is off the board.
+
+function shipVertBad(row,col,length){
+  var badCoord = false
+  if (row + length > 9){
+    badCoord = true
+  }
+
+  //if the gameState.board equals any other than an empty "" the coordinates are true.
+
+  else{
+  for (var i = 0; i<length; i++){
+    if (gameState.board[row+i][col] != ""){
+      badCoord = true
+    }
+  }
+  }
+  return badCoord
+}
 
 
 
@@ -72,7 +133,7 @@ function shootTorpedo(e){
   console.log(aRow)
   console.log(aCol)
   // protects user from using torpedo's on space that has already been torpedoed
-  if (gameState.board[aRow][aCol] != "" && gameState.board[aRow][aCol] != "1") {
+  if (gameState.board[aRow][aCol] != "" && gameState.board[aRow][aCol] != 1 && gameState.board[aRow][aCol] != 2 && gameState.board[aRow][aCol] != 3 && gameState.board[aRow][aCol] != 4 && gameState.board[aRow][aCol] != 5) {
     alert("target has already been torpedo'd")
   }
   // changes the color of a space without a ship to purple and updates the gameState.board with a miss on that index, also updates torpedo counts for used and remaining and changes the innerHTML
@@ -106,7 +167,7 @@ function shootTorpedo(e){
 
 // function checkWin() alerts a win message when the hit counter reaches 5
 function checkWin() {
-  if (hitCount === 5) {
+  if (hitCount === 17) {
     alert("You Sunk All The Ships, Congrats!")
 
   }
@@ -138,47 +199,6 @@ function resetButton() {
 }
 
 
-// fit()
 
 
-
-function fit(length) {
-  // row = Math.floor(Math.random()*10)
-  // col = Math.floor(Math.random()*10)
-
-  var negRow = row
-  var negCol = col
-  var posRow = row
-  var posCol = col
-  var regRow = row
-  var regCol = col
-
-  if (row - 1 === -1) {
-    negRow = 0
-    } else if (row + 1 === 10){
-      posRow = 9
-    } else if (col - 1 === -1){
-      negCol = 0
-    } else if (col + 1 === 10){
-      posCol = 9
-    }
-    if (gameState.board[posRow][posCol] === length){
-      return true
-    }
-    else return false
-  }
-
-
-
-
-
-
-  // if (gameState.board[row][col] === gameState.SHIP[0] || gameState.board[negRow][col] === gameState.SHIP[0] || gameState.board[posRow][col] === gameState.SHIP[0] ||  gameState.board[negRow][negCol] === gameState.SHIP[0] || gameState.board[posRow][posCol] === gameState.SHIP[0] || gameState.board[row][negCol] === gameState.SHIP[0] || gameState.board[row][posCol] === gameState.SHIP[0] || gameState.board[negRow][posCol] === gameState.SHIP[0] || gameState.board[posRow][negCol] === gameState.SHIP[0]){
-  //   return true
-  // }
-  // else return false
-
-
-
-
-  // backup code in case we break this shizzzz
+//
